@@ -1,0 +1,48 @@
+CREATE TABLE user (
+	username TEXT PRIMARY KEY,
+	pw TEXT NOT NULL,
+	d_name TEXT DEFAULT NULL,
+	bio TEXT DEFAULT NULL,
+	gender TEXT DEFAULT NULL
+);
+
+CREATE TABLE u_like (
+	id INTEGER PRIMARY KEY,
+	user_like TEXT NOT NULL,
+	user_id TEXT NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES user (username) ON DELETE CASCADE
+);
+
+CREATE TABLE u_dislike (
+	id INTEGER PRIMARY KEY,
+	user_dislike TEXT NOT NULL,
+	user_id TEXT NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES user (username) ON DELETE CASCADE
+);
+
+CREATE TABLE photo (
+	id TEXT PRIMARY KEY,
+	data TEXT NOT NULL,
+	FOREIGN KEY (id) REFERENCES user (username) ON DELETE CASCADE
+);
+
+CREATE TABLE chat (
+	id INTEGER PRIMARY KEY,
+	mode INTEGER NOT NULL,
+	title TEXT DEFAULT NULL,
+	date_modified TEXT DEFAULT NULL,
+	date_created TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	user_id TEXT NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES user (username) ON DELETE CASCADE
+);
+
+CREATE TABLE message (
+	id INTEGER PRIMARY KEY,
+	content TEXT NOT NULL,
+	sender INTEGER NOT NULL,
+	date_sent TEXT NOT NULL,
+	time_sent TEXT NOT NULL,
+	chat_id INTEGER NOT NULL,
+	FOREIGN KEY (chat_id) REFERENCES chat (id) ON DELETE CASCADE
+);
+
